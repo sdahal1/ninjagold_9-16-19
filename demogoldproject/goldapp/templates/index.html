@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .building {background-color: powderblue;
+            border: 1px solid;
+            display: inline-block;
+            width: 20%;
+        }
+        .events {
+            border : 1px solid;
+            width : 60%;
+            height: 100px;
+            margin-top : 30px;
+            overflow: scroll;
+        }
+        
+        </style>
+    <title>Ninja Gold</title>
+</head>
+<body>
+    <h1>Ninja Gold!</h1> <a href="/reset">Start over!</a>
+    <p>Your gold: {{request.session.totalgold}}</p>
+    <div class = "building">
+        <h1>Farm</h1>
+        <h3>Earns 10-20 gold</h3>
+        <form action="/processmoney" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="place" value="farm">
+            <input type="submit" value="Find Gold!">
+        </form>
+    </div>
+    <div class = "building">
+        <h1>Cave</h1>
+        <h3>Earns 5-10 gold</h3>
+        <form action="/processmoney" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="place" value="cave">
+            <input type="submit" value="Find Gold!">
+        </form>
+    </div>
+    <div class = "building">
+        <h1>House</h1>
+        <h3>Earns 2-5 gold</h3>
+        <form action="/processmoney" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="place" value="house">
+            <input type="submit" value="Find Gold!">
+        </form>
+    </div>
+    <div class = "building">
+        <h1>Casino</h1>
+        <h3>Earns/takes 0-50 gold</h3>
+        <form action="/processmoney" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="place" value="casino">
+            <input type="submit" value="Find Gold!">
+        </form>
+    </div>
+    <h3>Activities:</h3>
+    <div class = "events">
+        <ul>
+        {% for activity in request.session.allactivities %}
+        {% if "lost" in activity %}
+        <li style= "color: red;">{{activity}}</li>
+        {% else %}
+        <li style= "color: green;">{{activity}}</li>
+        {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>
